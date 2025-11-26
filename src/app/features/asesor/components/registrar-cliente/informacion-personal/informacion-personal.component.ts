@@ -26,7 +26,7 @@ export class InformacionPersonalComponent {
       numeroDocumento: ['', [
         Validators.required, 
         Validators.minLength(6),
-        Validators.maxLength(20),
+        Validators.maxLength(11),
         Validators.pattern(/^[0-9]+$/)
       ]],
       lugarExpedicion: ['', [
