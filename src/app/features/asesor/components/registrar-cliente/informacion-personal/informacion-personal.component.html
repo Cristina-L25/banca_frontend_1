@@ -115,8 +115,12 @@
         <input formControlName="fechaExpedicion" type="date"
           [max]="fechaHoy"
           class="w-full border border-gray-300 rounded-lg p-2.5" />
-        <p *ngIf="form.get('fechaExpedicion')?.touched && form.get('fechaExpedicion')?.invalid"
-           class="text-red-500 text-sm mt-1">Campo obligatorio (no puede ser futura)</p>
+        <p *ngIf="form.get('fechaExpedicion')?.touched && form.get('fechaExpedicion')?.hasError('required')"
+           class="text-red-500 text-sm mt-1">Campo obligatorio</p>
+        <p *ngIf="form.get('fechaExpedicion')?.touched && form.get('fechaExpedicion')?.hasError('fechaFutura')"
+           class="text-red-500 text-sm mt-1">La fecha no puede ser futura</p>
+        <p *ngIf="form.get('fechaExpedicion')?.touched && form.get('fechaExpedicion')?.hasError('expedicionAnteriorANacimiento')"
+           class="text-red-500 text-sm mt-1">Debe ser posterior a la fecha de nacimiento</p>
       </div>
     </div>
 

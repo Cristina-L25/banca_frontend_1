@@ -44,7 +44,8 @@ export class InformacionPersonalComponent {
       fechaNacimiento: ['', Validators.required],
       fechaExpedicion: ['', [
         Validators.required,
-        this.validarFechaNoFutura()
+        this.validarFechaNoFutura(),
+        this.validarFechaExpedicionPosteriorANacimiento()
       ]],
       primerNombre: ['', [
         Validators.required,
@@ -73,6 +74,11 @@ export class InformacionPersonalComponent {
       estadoCivil: ['', Validators.required],
       grupoEtnico: ['', Validators.required],
     });
+
+    // Escuchar cambios en fechaNacimiento para revalidar fechaExpedicion
+    this.form.get('fechaNacimiento')?.valueChanges.subscribe(() => {
+      this.form.get('fechaExpedicion')?.updateValueAndValidity();
+    });
   }
 
   // Validador para fecha no futura
@@ -82,6 +88,20 @@ export class InformacionPersonalComponent {
       const fecha = new Date(control.value);
       const hoy = new Date();
       return fecha <= hoy ? null : { fechaFutura: true };
+    };
+  }
+
+  // Validador para que la fecha de expedición sea posterior a la fecha de nacimiento
+  validarFechaExpedicionPosteriorANacimiento() {
+    return (control: any) => {
+      if (!control.value) return null;
+      const fechaExpedicion = new Date(control.value);
+      const fechaNacimiento = this.form?.get('fechaNacimiento')?.value;
+      
+      if (!fechaNacimiento) return null;
+      
+      const fechaNac = new Date(fechaNacimiento);
+      return fechaExpedicion > fechaNac ? null : { expedicionAnteriorANacimiento: true };
     };
   }
 
