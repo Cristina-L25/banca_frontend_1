@@ -10,7 +10,7 @@ export class SaldoCajeroService {
 
   constructor(private http: HttpClient) { }
 
-  obtenerSaldos(cajero: string): Observable<any> {
+  obtenerSaldos(id_usuario: number): Observable<any> {
     const token = localStorage.getItem('token');
 
     const headers = new HttpHeaders({
@@ -18,7 +18,7 @@ export class SaldoCajeroService {
     });
 
     return this.http.get(`${this.apiUrl}/saldo/consultar`, {
-      params: { cajero },
+      params: { id_usuario: id_usuario.toString() }, // CAMBIAR cajero por id_usuario
       headers: headers
     });
   }

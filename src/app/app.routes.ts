@@ -35,12 +35,12 @@ export const routes: Routes = [
     canActivate: [roleGuard],
     data: { role: 'Cajero' }
   },
-   {
-    path: 'cajero',
+  {
+    path: 'cajero-principal',
     loadChildren: () =>
-      import('./features/cajero/cajero.routes').then(m => m.CAJERO_ROUTES),
+      import('./features/cajero-principal/cajero-principal.routes').then(m => m.CAJERO_PRINCIPAL_ROUTES),
     canActivate: [roleGuard],
-    data: { role: 'Cajero' }
+    data: { role: 'Cajero-Principal' }
   },
   {
     path: '**',

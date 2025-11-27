@@ -5,19 +5,19 @@
   class="fixed top-3 z-50 bg-blue-900 text-white p-2 rounded-lg shadow-xl hover:bg-blue-800 active:scale-95"
   [ngClass]="sidebarVisible ? 'left-[232px]' : 'left-3'"
   style="transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
-  <svg 
-    *ngIf="!sidebarVisible" 
-    class="w-5 h-5" 
-    fill="none" 
-    stroke="currentColor" 
+  <svg
+    *ngIf="!sidebarVisible"
+    class="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
     viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
   </svg>
-  <svg 
-    *ngIf="sidebarVisible" 
-    class="w-5 h-5" 
-    fill="none" 
-    stroke="currentColor" 
+  <svg
+    *ngIf="sidebarVisible"
+    class="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
     viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
   </svg>
@@ -48,45 +48,46 @@
     </div>
 
 
-    <!-- Menús dinámicos CON SCROLL -->
-    <div class="flex-1 overflow-y-auto">
-      <div class="mb-6" *ngFor="let menu of menuItems">
-        <button
-          (click)="toggleMenu()"
-          class="w-full flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-blue-900 hover:bg-gray-50 transition-colors duration-200">
-          <span>{{ menu.titulo }}</span>
-          <svg
-            class="w-4 h-4 transition-transform duration-300 ease-out"
-            [class.rotate-180]="menuAbierto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+   <!-- Menús dinámicos CON SCROLL -->
+<div class="flex-1 overflow-y-auto">
+  <div class="mb-0" *ngFor="let menu of menuItems">
+    <button
+      (click)="toggleMenu(menu.titulo)"
+      class="w-full flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-blue-900 hover:bg-gray-50 transition-colors duration-200">
+      <span>{{ menu.titulo }}</span>
+      <svg
+        class="w-4 h-4 transition-transform duration-300 ease-out"
+        [class.rotate-180]="isMenuAbierto(menu.titulo)"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
 
 
-        <!-- Menú desplegable con transición suave -->
-        <nav
-          class="overflow-hidden transition-all duration-300 ease-out"
-          [style.max-height]="menuAbierto ? '600px' : '0px'"
-          [style.opacity]="menuAbierto ? '1' : '0'">
-          <div class="space-y-1 mt-2">
-            <a
-              *ngFor="let item of menu.items"
-              [routerLink]="item.ruta"
-              (click)="closeSidebar()"
-              routerLinkActive="active-menu-item"
-              [routerLinkActiveOptions]="{exact: false}"
-              class="menu-item block pl-4 pr-4 text-sm text-gray-600">
-              {{ item.label }}
-            </a>
-          </div>
-        </nav>
+    <!-- Menú desplegable con transición suave -->
+    <nav
+      class="overflow-hidden transition-all duration-300 ease-out"
+      [style.max-height]="isMenuAbierto(menu.titulo) ? '600px' : '0px'"
+      [style.opacity]="isMenuAbierto(menu.titulo) ? '1' : '0'">
+      <div class="space-y-0 mt-2">
+        <a
+          *ngFor="let item of menu.items"
+          [routerLink]="item.ruta"
+          (click)="closeSidebar()"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{exact: false}"
+          class="menu-item block pl-4 pr-4 text-sm text-gray-600">
+          {{ item.label }}
+        </a>
       </div>
-    </div>
+    </nav>
   </div>
-  
+</div>
+
+  </div>
+
   <!-- Footer del sidebar STICKY AL FONDO -->
   <div class="p-4 border-t border-gray-200 text-center text-xs text-gray-500 flex-shrink-0">
     <p>© 2025 BankDash</p>

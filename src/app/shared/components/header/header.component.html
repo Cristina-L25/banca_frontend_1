@@ -43,6 +43,15 @@
           <p class="text-sm font-bold text-gray-800">{{ currentUser.rol }}</p>
           <p class="text-xs text-gray-600 mt-0.5">{{ currentUser.nombre }}</p>
           <p class="text-xs text-gray-400 mt-1">ID Rol: {{ currentUser.id_usuario_rol }}</p>
+          <!-- ✅ AGREGAR INFORMACIÓN DE CAJA -->
+          <!-- ✅ INFORMACIÓN DE CAJA ASIGNADA -->
+  <div *ngIf="currentUser.id_caja" class="mt-2">
+    <p class="text-xs font-medium text-blue-700">Caja Asignada:</p>
+    <p class="text-xs text-blue-600">#{{ currentUser.id_caja }} - {{ currentUser.nombre_caja }}</p>
+  </div>
+  <div *ngIf="!currentUser.id_caja && currentUser.rol === 'cajero'" class="mt-2">
+    <p class="text-xs text-yellow-600">Sin caja asignada</p>
+  </div>
         </div>
 
         <!-- Botón cerrar sesión sin márgenes blancos -->

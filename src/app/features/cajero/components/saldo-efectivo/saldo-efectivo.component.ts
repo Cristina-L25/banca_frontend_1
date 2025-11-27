@@ -14,7 +14,7 @@ export class SaldoEfectivoComponent implements OnInit {
   saldoEfectivo: number = 0;
   fechaActualizacion: Date | null = null;
   cargando: boolean = true;
-  cajeroActual: string = '';
+  idUsuario: number = 0; // NUEVA VARIABLE
 
   constructor(
     private saldoCajeroService: SaldoCajeroService,
@@ -25,23 +25,23 @@ export class SaldoEfectivoComponent implements OnInit {
     // ✅ Obtener el nombre del usuario actual desde AuthService
     this.authService.currentUser.subscribe(user => {
       if (user) {
-        this.cajeroActual = user.nombre;
-        console.log('🔑 Cajero actual (Efectivo):', this.cajeroActual);
+        this.idUsuario = user.id_usuario; // USAR id_usuario EN LUGAR DE nombre
+        console.log('🔑 ID Usuario actual (Efectivo):', this.idUsuario);
         this.cargarSaldo();
       }
     });
   }
 
   cargarSaldo() {
-    if (!this.cajeroActual) {
+    if (!this.idUsuario) {
       console.warn('⚠️ No hay cajero definido');
       return;
     }
 
     this.cargando = true;
-    console.log('📦 Consultando saldo en efectivo para:', this.cajeroActual);
+    console.log('📦 Consultando saldo en efectivo para:', this.idUsuario);
 
-    this.saldoCajeroService.obtenerSaldos(this.cajeroActual).subscribe({
+    this.saldoCajeroService.obtenerSaldos(this.idUsuario).subscribe({
       next: (response) => {
         console.log('✅ Respuesta saldo efectivo:', response);
         if (response.exito && response.saldos) {
